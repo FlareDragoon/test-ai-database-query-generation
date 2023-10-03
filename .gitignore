@@ -1,3 +1,5 @@
 .DS_Store
 .idea/
 __pycache__
+python_sql_lite/keys.py
+
