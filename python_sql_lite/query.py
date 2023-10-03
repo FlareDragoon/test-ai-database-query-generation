@@ -1,15 +1,13 @@
-import argparse
 from db import create_connection
 
-
-def select_all_from_menu(conn):
+def select_all_from_games(conn):
     """
-    Query all rows in the tasks table
+    Query all rows in the games table
     :param conn: the Connection object
     :return:
     """
     cur = conn.cursor()
-    cur.execute("SELECT * FROM menu")
+    cur.execute("SELECT * FROM games")
 
     rows = cur.fetchall()
 
@@ -18,8 +16,9 @@ def select_all_from_menu(conn):
 
 def select_from_table(conn, query):
     """
-    Query all rows in the tasks table
+    Query rows based on the provided query
     :param conn: the Connection object
+    :param query: SQL query to be executed
     :return:
     """
     cur = conn.cursor()
@@ -34,8 +33,6 @@ if __name__ == "__main__":
     database = "./pythonsqlite.db"
     conn = create_connection(database)
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--query", type=str, help="SELECT * FROM menu where unit_price >=55.0")
-    args = parser.parse_args()
-    print(f"Executing query: {args.query}")
-    select_from_table(conn, args.query)
+    query = input("Please enter your query: ")
+    print(f"Executing query: {query}")
+    select_from_table(conn, query)

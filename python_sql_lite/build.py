@@ -3,136 +3,155 @@ import os
 from db import create_table, create_connection
 from schema import *
 
-
-def select_all_from_menu(conn):
-    """
-    Query all rows in the tasks table
-    :param conn: the Connection object
-    :return:
-    """
+def select_all_from_games(conn):
     cur = conn.cursor()
-    cur.execute("SELECT * FROM menu")
-
+    cur.execute("SELECT * FROM games")
     rows = cur.fetchall()
-
     for row in rows:
         print(row)
 
-def insert_to_menu(conn):
-    """
-    Create a new project into the projects table
-    :param conn:
-    :param project:
-    :return: project id
-    """
+def insert_to_genres(conn):
     sql = """
-        INSERT INTO menu VALUES
-        (1, 'Green Tea', '1', 50),
-        (2, 'Thai Tea', '1', 50),
-        (3, 'Jasmine Tea', '1', 50),
-        (4, 'Espresso', '2',55),
-        (5, 'Cappucino', '2',55),
-        (6, 'Latte', '2',55),
-        (7, 'Mocha', '2',55),
-        (8, 'Passion Fruit', '3',60),
-        (9, 'Mango Juice', '3',60),
-        (10,'Orange Juice', '3',60);
-    """
-
-    cur = conn.cursor()
-    cur.execute(sql)
-    conn.commit()
-    return cur.lastrowid
-
-def insert_to_categories(conn):
-
-    sql = """
-        INSERT INTO categories VALUES
-	    (1, 'tea'),
-        (2, 'coffee'),
-        (3, 'juice');
+        INSERT INTO genres VALUES
+	    (1, 'Action'),
+        (2, 'Adventure'),
+        (3, 'RPG'),
+        (4, 'Simulation');
     """
     cur = conn.cursor()
     cur.execute(sql)
     conn.commit()
     return cur.lastrowid
 
-def insert_to_customers(conn):
-
+def insert_to_platforms(conn):
     sql = """
-        INSERT INTO customers VALUES
-	    (1, 'Mark', 'Lee','Bangkok'),
-        (2, 'Johnny', 'Suh', 'Phuket'),
-        (3, 'Jennie', 'Kim', 'Chiangmai'),
-        (4, 'Jeno', 'Lee', 'Bangkok'),
-        (5, 'Karina', 'Yoo', 'Chiangmai');
+        INSERT INTO platforms VALUES
+        (1, 'PC'),
+        (2, 'PS5'),
+        (3, 'Xbox X'),
+        (4, 'Switch'),
+        (5, 'Multiple'),
+        (6, 'PS4');
     """
     cur = conn.cursor()
     cur.execute(sql)
     conn.commit()
     return cur.lastrowid
 
-def insert_to_employees(conn):
+def insert_to_studios(conn):
     sql = """
-         INSERT INTO employee VALUES
-	        (1, 'Nicolene', 'Jones','2020-09-01','Bangkok'),
-            (2, 'Anna', 'Smith', '2021-12-01', 'Phuket'),
-            (3, 'Jessica', 'Brown', '2020-08-01', 'Chiangmai');
+        INSERT INTO studios VALUES
+        (1, 'Nintendo', 'Kyoto'),
+        (2, 'Guerrilla Games', 'Amsterdam'),
+        (3, 'Sonic Team', 'Tokyo'),
+        (4, 'BlueTwelve Studio', 'Montpellier'),
+        (5, 'Square Enix', 'Tokyo'),
+        (6, 'EA', 'California'),
+        (7, 'Insomniac Games', 'California');
     """
     cur = conn.cursor()
     cur.execute(sql)
     conn.commit()
     return cur.lastrowid
 
-def insert_to_orders(conn):
-
+def insert_to_games(conn):
     sql = """
-        INSERT INTO Orders VALUES
-	    (1, '2022-08-01',1,1,4,'Grabfood',1),
-        (2, '2022-08-01',6,2,1,'Lineman',1),
-	    (3, '2022-08-02',2,2,2,'Robinhood',2),
-	    (4, '2022-08-03',3,1,5,'Grabfood',3),
-	    (5, '2022-08-04',1,1,2,'Robinhood',2),
-	    (6, '2022-08-05',6,1,4,'Grabfood',1),
-	    (7, '2022-08-05',10,1,3,'Grabfood',3),
-	    (8, '2022-08-09',3,2,4,'Grabfood',1),
-	    (9, '2022-08-13',5,3,1,'Lineman',1),
-	    (10, '2022-08-13',6,1,2,'Robinhood',2),
-	    (11, '2022-08-13',7,1,5,'Lineman',3),
-	    (12, '2022-08-14',4,1,5,'Grabfood',3),
-	    (13, '2022-08-15',5,2,3,'Grabfood',3),
-	    (14, '2022-08-15',10,1,2,'Robinhood',2),
-	    (15, '2022-08-18',5,2,1,'Lineman',1),
-	    (16, '2022-08-20',6,1,2,'Robinhood',2),
-	    (17, '2022-08-21',4,2,1,'Lineman',1),
-	    (18, '2022-08-25',5,1,5,'Grabfood',3),
-	    (19, '2022-08-26',5,3,3,'Grabfood',3),
-	    (20, '2022-08-29',6,2,4,'Grabfood',1);
+        INSERT INTO games VALUES
+        (1, 'Final Fantasy XVI', 2023, 5, 2, 3),
+        (2, 'Final Fantasy VII: Rebirth', 2024, 5, 2, 3),
+        (3, 'Star Wars Jedi: Survivor', 2023, 6, 2, 2),
+        (4, 'The Legend of Zelda: Tears of the Kingdom', 2023, 1, 4, 2),
+        (5, 'Stranger of Paradise: Final Fantasy Origin', 2022, 5, 5, 3),
+        (6, 'Spider-Man 2', 2023, 7, 2, 1),
+        (7, 'Spider-Man: Miles Morales', 2020, 7, 2, 1),
+        (8, 'Crisis Core: Final Fantasy VII Reunion', 2022, 5, 5, 3),
+        (9, 'The Legend of Zelda: Breath of the Wild', 2017, 1, 4, 2),
+        (10, 'Dragon Quest Monsters: The Dark Prince', 2023, 5, 4, 3),
+        (11, 'Horizon: Forbidden West', 2022, 2, 2, 1),
+        (12, 'Sonic Frontiers', 2022, 3, 5, 2),
+        (13, 'Stray', 2022, 4, 5, 1),
+        (14, 'Horizon: Zero Dawn', 2017, 2, 6, 1);
     """
     cur = conn.cursor()
     cur.execute(sql)
     conn.commit()
     return cur.lastrowid
+
+def insert_to_characters(conn):
+    sql = """
+        INSERT INTO characters VALUES
+        (1, 'Clive Rosfield', 1),
+        (2, 'Jill Warrick', 1),
+        (3, 'Cloud', 2),
+        (4, 'Tifa', 2),
+        (5, 'Cal Kestis', 3),
+        (6, 'Garland', 5),
+        (7, 'Zach', 8),
+        (8, 'Yuffie', 2),
+        (9, 'Peter Parker', 6),
+        (10, 'Mary Jane Watson', 6),
+        (11, 'Miles Morales', 7),
+        (12, 'Psaro', 10),
+        (13, 'Aloy', 11),
+        (14, 'Sonic', 12),
+        (15, 'B12', 13),
+        (16, 'Link', 9);
+    """
+    cur = conn.cursor()
+    cur.execute(sql)
+    conn.commit()
+    return cur.lastrowid
+
+def insert_to_character_games(conn):
+    #id, characterid, gameid
+    sql = """
+        INSERT INTO character_games VALUES
+        (1, 1, 1),
+        (2, 3, 2),
+        (3, 5, 3),
+        (4, 16, 4),
+        (5, 6, 5),
+        (6, 9, 6),
+        (7, 11, 7),
+        (8, 7, 8),
+        (9, 16, 9),
+        (10, 12, 10),
+        (11, 13, 11),
+        (12, 14, 12),
+        (13, 15, 13),
+        (14, 13, 14)
+    """
+    cur = conn.cursor()
+    cur.execute(sql)
+    conn.commit()
+    return cur.lastrowid
+
 
 def main():
     database = "./pythonsqlite.db"
 
     # create a database connection
     conn = create_connection(database)
-    create_table(conn, sql_create_category_table)
-    insert_to_categories(conn)
-    create_table(conn, sql_create_menu_table)
-    insert_to_menu(conn)
-    create_table(conn, sql_create_customers_table)
-    insert_to_customers(conn)
-    create_table(conn, sql_create_employee_table)
-    insert_to_employees(conn)
-    create_table(conn, sql_create_orders_table)
-    insert_to_orders(conn)
+    
+    create_table(conn, sql_create_genres_table)
+    insert_to_genres(conn)
+    
+    create_table(conn, sql_create_platforms_table)
+    insert_to_platforms(conn)
+    
+    create_table(conn, sql_create_studios_table)
+    insert_to_studios(conn)
+    
+    create_table(conn, sql_create_games_table)
+    insert_to_games(conn)
+    
+    create_table(conn, sql_create_characters_table)
+    insert_to_characters(conn)
+    
+    create_table(conn, sql_create_character_games_table)
+    insert_to_character_games(conn)
 
     print("Database build successful!")
 
 if __name__ == "__main__":
     main()
-
-
